@@ -32,11 +32,12 @@ void time_graph(size_t N){
 void position_graph(size_t N){
   //Shows the difference between the starting position of vector and position of curretly added element, a change in slope suggests these can be the positions where the vector is relocating itself
   std::vector<int> a;
-  std::vector<int>::iterator base = a.begin();
+  std::vector<int>::iterator base;
   for (int i = 0; i < N; i++)
   {
     a.push_back(i);
-    std::cout << i << " " << a.end() - base <<"\n";
+    if (i==0){base =  a.begin();}
+    std::cout << i << " " << a.end() - base << "\n";
   }
   
 }
@@ -46,7 +47,7 @@ int main() {
   std::cout << "1 1\n"; // GNUplot does not complain
    */
 
-  size_t N = 1000;
+  size_t N = 10000;
   time_graph(N);
   
   return 0;

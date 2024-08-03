@@ -78,4 +78,18 @@ It is a type able to represent the size of any object in bytes: `size_t` is the 
 7.94221e+07
 1.84369e+08
 
+### o2:
+4.17253e+07  
+2.79857e+07  
+3.20068e+07  
+1.8846e+07  
+1.555e+08  
+
+### o3:
+3.16735e+07  
+2.25397e+07  
+9.70676e+06  
+2.02996e+07  
+1.1601e+08  
+
 

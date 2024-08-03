@@ -136,9 +136,9 @@ int main() {
     // Example: local vector - on stack
     time.start();
     sum = 0;
-    for(unsigned int k = 0; k<M; ++k) { sum += test_array_pre_allocated(arr,N); }
+    for(unsigned int k = 0; k<M; ++k) { sum += test_array(N); }
     double t = (double)time.stop();
-    std::cerr << t <<"\n";
+    std::cout << t <<"\n";
 
     N = N*64;
   }
