@@ -1,0 +1,98 @@
+$date
+	Wed Aug  7 16:28:54 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb $end
+$scope module circuit $end
+$var wire 1 ! A $end
+$var wire 1 " B $end
+$var wire 1 # C $end
+$var wire 1 $ D $end
+$var wire 1 % E $end
+$var wire 1 & F $end
+$var wire 1 ' G $end
+$var wire 1 ( x1 $end
+$var wire 1 ) x2 $end
+$var wire 1 * x3 $end
+$var wire 1 + x4 $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+1+
+0*
+0)
+0(
+0'
+0&
+0%
+0$
+1#
+1"
+0!
+$end
+#2
+1'
+0#
+1$
+0&
+1!
+1%
+1*
+0+
+#5
+1#
+0%
+1+
+#9
+0!
+0$
+1&
+0+
+0*
+1)
+#14
+1!
+0"
+1$
+1+
+#20
+0!
+0'
+1%
+0+
+1*
+#27
+1!
+1"
+1'
+1#
+0$
+0%
+0&
+1+
+#35
+1$
+1%
+0+
+0*
+0)
+1(
+#44
+0$
+0%
+0'
+1+
+#54
+1&
+1$
+1%
+0'
+0+
+0(
