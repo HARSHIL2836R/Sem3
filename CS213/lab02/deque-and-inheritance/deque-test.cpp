@@ -10,9 +10,13 @@ int main (){
     // Test constructors and push
     Queue<int> q1(cap);
     q1.push_back(1);
+    cout << q1 << endl;
     q1.push_back(2);
+    cout << q1 << endl;
     q1.push_back(3);
+    cout << q1 << endl;
     q1.push_back(4);
+    cout << q1 << endl;
     q1.push_back(5);
     cout << q1 << endl;
     cout << "Size: " << q1.get_size() << endl;
