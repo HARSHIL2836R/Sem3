@@ -56,10 +56,10 @@ template <typename T> void Stack<T> :: push(T value){
     A[++h]=value;
 }
 template <typename T> T Stack<T> :: pop(){
-    return A[head--];
+    return A[h--];
 }
 template <typename T> T Stack<T> :: peek(){
-    return A[head];
+    return A[h];
 }
 template <typename T> bool Stack<T> :: isEmpty(){
     return (getSize() == 0);

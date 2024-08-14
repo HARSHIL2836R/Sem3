@@ -29,3 +29,24 @@ public:
 
 // ENTER YOUR IMPLEMENTATIONS OF METHODS BELOW
 
+template <typename T> Queue<T> :: Queue(){}
+
+template <typename T> Queue<T> :: ~Queue(){}
+
+template <typename T> void Queue<T> :: enqueue(T value){
+    if (first_stack.isEmpty()){
+        while (!second_stack.isEmpty()){
+            first_stack.push(second_stack.pop());
+        }
+        first_stack.push(value);
+    }
+    else{
+        first_stack.push(value);
+    }
+}
+template <typename T> T Queue<T> :: dequeue(){
+    while (!first_stack.isEmpty()){
+        second_stack.push(first_stack.pop());
+    }
+    return second_stack.pop();
+}
