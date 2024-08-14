@@ -59,7 +59,7 @@ class Deque
         // array!
         for (int i = 0; i < dq.size; i++)
         {
-            out<<dq.arr[i];
+            out<<dq.arr[i]<<" ";
         }
         
         return out;
@@ -76,7 +76,7 @@ protected:
     int resize_factor;
 
 public:
-    Deque(int cap, bool resize = true, int resize_factor = 2) 
+    Deque(int cap, bool resize = true, int resize_factor = 2)
     {                                           
         // TODO: Implement the constructor that initializes the Deque with a given capacity
         // and optionally the resize factor
@@ -94,7 +94,7 @@ public:
         Deque(DEFAULT_CAPACITY,resize,resize_factor);
     }
 
-    Deque(const Deque& dq): arr(dq.arr), auto_resize(dq.auto_resize), resize_factor(dq.resize_factor), size(dq.size)
+    Deque(const Deque& dq): arr(dq.arr), auto_resize(dq.auto_resize), resize_factor(dq.resize_factor), size(dq.size), capacity(dq.capacity)
     {
         // TODO: Implement the copy constructor for the Deque. 
         // What you need to do is copy the contents of the Deque object dq to the new Deque object
@@ -104,7 +104,7 @@ public:
     ~Deque()
     {
         // TODO: Implement the destructor
-        delete [] arr;
+        //delete [] arr;
     }
 
     int get_capacity()
@@ -146,7 +146,7 @@ protected:
                 {
                     arr[i]=old_arr[i];
                 }
-                delete [] arr;
+                delete [] old_arr;
             }
             catch (const bad_alloc& e) {//Runs when: Memory Allocation is failed: std::bad_alloc
                 return false;
@@ -193,7 +193,7 @@ protected:
                 {
                     arr[i+1]=old_arr[i];
                 }
-                delete [] arr;
+                delete [] old_arr;
             }
             catch (const bad_alloc& e) {//Runs when: Memory Allocation is failed: std::bad_alloc
                 return false;

@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <chrono>
 
+#define CIRCULAR
+
 #include "queue.h"
 #ifdef LINEAR
 #include "linearQueue.cpp"
