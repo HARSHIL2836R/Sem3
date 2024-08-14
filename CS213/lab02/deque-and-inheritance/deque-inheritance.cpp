@@ -31,7 +31,7 @@
 
     Read about class inheritance and friend functions. Understand copy constructors and how to use them before you 
     attempt this problem.
-
+    
     Run your code:
     g++ deque_inheritance.cpp -o deque_inheritance
     ./deque_inheritance
