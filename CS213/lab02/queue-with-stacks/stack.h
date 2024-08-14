@@ -31,8 +31,7 @@ protected:
     void expand(){//in exponential growth, the average cost of push remains O(1)
         N *= 2;
         int* A_new = new T[N];
-        for (int i = 0; i < N/2; i++)
-        {
+        for (int i = 0; i < N/2; i++){
             A_new[i]=A[i];
         }
         delete [] A;
@@ -44,7 +43,6 @@ protected:
 
 template <typename T> Stack<T> :: Stack(){//Don't specify return type on constructors
     A = new T[N];
-    h++;
 }
 template <typename T> Stack<T> :: ~Stack(){
     delete [] A;
@@ -65,5 +63,5 @@ template <typename T> bool Stack<T> :: isEmpty(){
     return (getSize() == 0);
 }
 template <typename T> size_t Stack<T> :: getSize(){
-    return h;
+    return h+1;
 }

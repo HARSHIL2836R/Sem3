@@ -96,9 +96,8 @@ bool checkTestcaseStack(std::vector<std::pair<int, std::string>> testcase,
             }
         }
     }
-    std::cout << "Testcase " << testcase_index << " [ " << testcase.size() << 
-        " operations ] passed for Stack with " << duration / testcase.size() <<
-        " ns per operation" << std::endl;
+    //std::cout << "Testcase " << testcase_index << " [ " << testcase.size() << " operations ] passed for Stack with " << duration / testcase.size() <<" ns per operation" << std::endl;
+    std::cout << testcase.size()<<" "<<duration/testcase.size()<<std::endl;
     return true;
 }
 
@@ -191,9 +190,8 @@ bool checkTestcaseQueue(std::vector<std::pair<int, std::string>> testcase,
             }
         }
     }
-    std::cout << "Testcase " << testcase_index << " [ " << testcase.size() << 
-        " operations ] passed for Queue with " << duration / testcase.size() <<
-        " ns per operation" << std::endl;
+    //std::cout << "Testcase " << testcase_index << " [ " << testcase.size() << " operations ] passed for Queue with " << duration / testcase.size() <<" ns per operation" << std::endl;
+    std::cout << testcase.size()<<" "<<duration/testcase.size()<<std::endl;
     return true;
 }
 
@@ -297,6 +295,8 @@ int main(void) {
     num_correct += checkTestcaseStack(TESTCASE, 4);
     TESTCASE = generateTestcaseStack(1000000);
     num_correct += checkTestcaseStack(TESTCASE, 5);
+    
+    std::cout<<std::endl;
 
     TESTCASE = {{1, "ENQUEUE"}, {2, "ENQUEUE"}, {3, "ENQUEUE"}, {0, "PEEK"}, 
         {0, "DEQUEUE"}, {0, "PEEK"}, {4, "ENQUEUE"}, {5, "ENQUEUE"},
@@ -312,6 +312,6 @@ int main(void) {
     TESTCASE = generateTestcaseQueue(1000000);
     num_correct += checkTestcaseQueue(TESTCASE, 5);
 
-    std::cout << std::endl << "RESULTS: " << num_correct << " / 10" << std::endl;
+    //std::cout << std::endl << "RESULTS: " << num_correct << " / 10" << std::endl;
     return 0;
 }

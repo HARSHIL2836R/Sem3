@@ -33,7 +33,7 @@ template <typename T> Queue<T> :: Queue(){}
 
 template <typename T> Queue<T> :: ~Queue(){}
 
-template <typename T> void Queue<T> :: enqueue(T value){
+template <typename T> void Queue<T> :: enqueue(T value){//back of queue
     if (first_stack.isEmpty()){
         while (!second_stack.isEmpty()){
             first_stack.push(second_stack.pop());
@@ -44,9 +44,28 @@ template <typename T> void Queue<T> :: enqueue(T value){
         first_stack.push(value);
     }
 }
-template <typename T> T Queue<T> :: dequeue(){
+template <typename T> T Queue<T> :: dequeue(){//front of queue
     while (!first_stack.isEmpty()){
         second_stack.push(first_stack.pop());
     }
     return second_stack.pop();
+}
+template <typename T> T Queue<T> :: peek(){
+    if (second_stack.isEmpty()){
+        while (!first_stack.isEmpty()){
+            second_stack.push(first_stack.pop());
+        }
+    }
+    return second_stack.peek();
+}
+template <typename T> bool Queue<T> :: isEmpty(){
+    return first_stack.isEmpty() && second_stack.isEmpty();
+}
+template <typename T> size_t Queue<T> :: getSize(){
+    if (first_stack.isEmpty()){
+        return second_stack.getSize();
+    }
+    else{
+        return first_stack.getSize();
+    }
 }

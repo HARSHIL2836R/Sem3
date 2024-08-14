@@ -1,0 +1,12 @@
+Testcase 1 [ 15 operations ] passed for Stack with 3078.33 ns per operation
+Testcase 2 [ 1000 operations ] passed for Stack with 59.24 ns per operation
+Testcase 3 [ 10000 operations ] passed for Stack with 19.9764 ns per operation
+Testcase 4 [ 100000 operations ] passed for Stack with 19.3588 ns per operation
+Testcase 5 [ 1000000 operations ] passed for Stack with 21.0356 ns per operation
+Testcase 1 [ 16 operations ] passed for Queue with 1580.25 ns per operation
+Testcase 2 [ 1000 operations ] passed for Queue with 118.089 ns per operation
+Testcase 3 [ 10000 operations ] passed for Queue with 96.8464 ns per operation
+Testcase 4 [ 100000 operations ] passed for Queue with 146.126 ns per operation
+Testcase 5 [ 1000000 operations ] passed for Queue with 1012.16 ns per operation
+
+RESULTS: 10 / 10
