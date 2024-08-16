@@ -32,7 +32,7 @@ public:
 template <typename T> Queue<T> :: Queue(){}
 
 template <typename T> Queue<T> :: ~Queue(){}
-
+//TODO: Implement Queue with second stack only used for popping
 template <typename T> void Queue<T> :: enqueue(T value){//back of queue
     if (first_stack.isEmpty()){
         while (!second_stack.isEmpty()){
