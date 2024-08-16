@@ -15,7 +15,7 @@ template <typename T> void DynamicQueue<T> :: grow() {
   N=nextSize();
   T * A_new = new T[N];
   int i = 0;
-  while ((N+tail-head)%N != 1)
+  while (((N/2)+tail-head)%(N/2) != 1)
   {
     A_new[i] = A[head];
     head = (head+1)%N;
