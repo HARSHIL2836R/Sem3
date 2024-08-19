@@ -60,44 +60,162 @@ rca_Nbit #(.N(N)) dut (.a(a), .b(input_b), .cin(a_or_s), .S(out), .cout(cout));
 
 endmodule
 
+module karatsuba_2 (X,Y,Z);
+input [1:0] X,Y;
+output [3:0] Z;
+
+wire Xn,Xe,Yn,Ye;
+assign {Xn,Xe} = X;
+assign {Yn,Ye} = Y;
+
+wire [1:0] z0,z1,z2,z3;
+
+assign z0[0] = Xe & Ye;
+assign z0[1] = 0;
+assign z2[0] = Xn & Yn;
+assign z2[1] = 0;
+
+wire signX, signY,sub;
+assign sub = 1;
+wire z3_1,z3_2;
+adder_subtractor_Nbit #(.N(1)) S_1 (.a(Xn),.b(Xe),.a_or_s(sub),.out(z3_1),.cout(signX));
+adder_subtractor_Nbit #(.N(1)) S_2 (.a(Yn),.b(Ye),.a_or_s(sub),.out(z3_2),.cout(signY));
+
+wire [1:0] z1_1;
+wire cout_z1_1,add;
+assign add = 0;
+assign z3[0] = z3_1 & z3_2;
+assign z3[1] = 0;
+adder_subtractor_Nbit #(.N(2)) A_1 (.a(z0),.b(z2),.a_or_s(add),.out(z1_1),.cout(cout_z1_1));
+
+wire sign_z3, cout_z1;
+assign sign_z3 = signX ^ signY;
+
+adder_subtractor_Nbit #(.N(2)) A_2 (.a(z1_1),.b(z3),.a_or_s(sign_z3),.out(z1),.cout(cout_z1));
+
+//Converting z1,z2,z3 to 4 bits
+
+wire [2:0] big_z0,big_z1,big_z0_z1;
+wire cout_z0_z1;
+assign big_z0 = 0;
+assign big_z1 = 0;
+assign big_z0[1:0] = z0;
+assign big_z1[2:1] = z1;
+
+adder_subtractor_Nbit #(.N(3)) A_3 (.a(big_z0),.b(big_z0),.a_or_s(add),.out(big_z0_z1),.cout(cout_z0_z1));
+
+wire [3:0] bigger_z2, bigger_z0_z1,z;
+wire dummy_cout;
+assign bigger_z2 = 0;
+assign bigger_z0_z1 = 0;
+assign bigger_z2[3:2] = z2;
+assign bigger_z0_z1[2:0] = big_z0_z1;
+
+rca_Nbit #(.N(4)) dut (.a(bigger_z2), .b(bigger_z0_z1), .cin(cout_z0_z1), .S(z), .cout(dummy_cout));
+
+endmodule
+
+module karatsuba_4 (X,Y,Z);
+input [3:0] X,Y;
+output [7:0] Z;
+
+wire [1:0] Xn,Xe,Yn,Ye;
+assign {Xn,Xe} = X;
+assign {Yn,Ye} = Y;
+
+wire [3:0] z0,z1,z2,z3;
+
+karatsuba_2 dut1 (.X(Xe),.Y(Ye),.Z(z0));
+karatsuba_2 dut2 (.X(Xn),.Y(Yn),.Z(z2));
+
+wire signX, signY,sub;
+assign sub = 1;
+wire [1:0] z3_1,z3_2;
+adder_subtractor_Nbit #(.N(2)) S_1 (.a(Xn),.b(Xe),.a_or_s(sub),.out(z3_1),.cout(signX));
+adder_subtractor_Nbit #(.N(2)) S_2 (.a(Yn),.b(Ye),.a_or_s(sub),.out(z3_2),.cout(signY));
+
+wire [3:0] z1_1;
+wire cout_z1_1,add;
+assign add = 0;
+karatsuba_2 dut3 (.X(z3_1),.Y(z3_2),.Z(z3));
+adder_subtractor_Nbit #(.N(4)) A_1 (.a(z0),.b(z2),.a_or_s(add),.out(z1_1),.cout(cout_z1_1));
+
+wire sign_z3, cout_z1;
+assign sign_z3 = signX ^ signY;
+
+adder_subtractor_Nbit #(.N(4)) A_2 (.a(z1_1),.b(z3),.a_or_s(sign_z3),.out(z1),.cout(cout_z1));
+
+//Converting z1,z2,z3 to 8 bits
+
+wire [5:0] big_z0,big_z1,big_z0_z1;
+wire cout_z0_z1;
+assign big_z0 = 0;
+assign big_z1 = 0;
+assign big_z0[3:0] = z0;
+assign big_z1[5:2] = z1;
+
+adder_subtractor_Nbit #(.N(6)) A_3 (.a(big_z0),.b(big_z0),.a_or_s(add),.out(big_z0_z1),.cout(cout_z0_z1));
+
+wire [7:0] bigger_z2, bigger_z0_z1,z;
+wire dummy_cout;
+assign bigger_z2 = 0;
+assign bigger_z0_z1 = 0;
+assign bigger_z2[7:4] = z2;
+assign bigger_z0_z1[5:0] = big_z0_z1;
+
+rca_Nbit #(.N(8)) dut (.a(bigger_z2), .b(bigger_z0_z1), .cin(cout_z0_z1), .S(z), .cout(dummy_cout));
+
+endmodule
+
 module karatsuba_8 (X,Y,Z);
 input [7:0] X,Y;
 output [15:0] Z;
 
-generate
-    genvar j;
-    genvar i;
-    for (i=0;i<7;i=i+1) begin
-        for (j=0;i<7;i=i+1) begin
-            wire xj_yi;
-            assign xj_yi = X[i] & Y[j];//assign and gates to all combinations
-            if (i == 0)begin
-                if (j ==0) begin
-                    assign Z[0] = X[0] & Y[0];//save the first digit of output
-                end
-            end
-            else if (i == 1)begin
-                wire cout_ij;
-                if (j == 0) begin
-                    half_adder ha_ij (x1_y0,xj_yi,Z[1],cout_ij);//first half adder
-                end
-                else if (j == 7) begin
-                    wire hao_ij;
-                    half_adder ha_ij (x7_y1,cout_16,hao_ij,cout_ij);//last half adder
-                end
-                else begin
-                    genvar a,b,c;
-                    assign a = i-1;
-                    assign b = j+1;
-                    assign c = j-1;
-                    wire fao_ij;
-                    full_adder fa_ij (xa_yb,xi_yj,cout_ic,fao_ij,cout_ij);
-                end
-            end
+wire [3:0] Xn,Xe,Yn,Ye;
+assign {Xn,Xe} = X;
+assign {Yn,Ye} = Y;
 
-        end 
-    end
-endgenerate
+wire [7:0] z0,z1,z2,z3;
+
+karatsuba_4 dut1 (.X(Xe),.Y(Ye),.Z(z0));
+karatsuba_4 dut2 (.X(Xn),.Y(Yn),.Z(z2));
+
+wire signX, signY,sub;
+assign sub = 1;
+wire [3:0] z3_1,z3_2;
+adder_subtractor_Nbit #(.N(4)) S_1 (.a(Xn),.b(Xe),.a_or_s(sub),.out(z3_1),.cout(signX));
+adder_subtractor_Nbit #(.N(4)) S_2 (.a(Yn),.b(Ye),.a_or_s(sub),.out(z3_2),.cout(signY));
+
+wire [7:0] z1_1;
+wire cout_z1_1,add;
+assign add = 0;
+karatsuba_4 dut3 (.X(z3_1),.Y(z3_2),.Z(z3));
+adder_subtractor_Nbit #(.N(8)) A_1 (.a(z0),.b(z2),.a_or_s(add),.out(z1_1),.cout(cout_z1_1));
+
+wire sign_z3, cout_z1;
+assign sign_z3 = signX ^ signY;
+
+adder_subtractor_Nbit #(.N(8)) A_2 (.a(z1_1),.b(z3),.a_or_s(sign_z3),.out(z1),.cout(cout_z1));
+
+//Converting z1,z2,z3 to 16 bits
+
+wire [11:0] big_z0,big_z1,big_z0_z1;
+wire cout_z0_z1;
+assign big_z0 = 0;
+assign big_z1 = 0;
+assign big_z0[7:0] = z0;
+assign big_z1[11:8] = z1;
+
+adder_subtractor_Nbit #(.N(12)) A_3 (.a(big_z0),.b(big_z0),.a_or_s(add),.out(big_z0_z1),.cout(cout_z0_z1));
+
+wire [15:0] bigger_z2, bigger_z0_z1,z;
+wire dummy_cout;
+assign bigger_z2 = 0;
+assign bigger_z0_z1 = 0;
+assign bigger_z2[15:8] = z2;
+assign bigger_z0_z1[11:0] = big_z0_z1;
+
+rca_Nbit #(.N(16)) dut (.a(bigger_z2), .b(bigger_z0_z1), .cin(cout_z0_z1), .S(z), .cout(dummy_cout));
 
 endmodule
 
@@ -115,7 +233,7 @@ karatsuba_8 dut1 (.X(Xe),.Y(Ye),.Z(z0));
 karatsuba_8 dut2 (.X(Xn),.Y(Yn),.Z(z2));
 
 wire signX, signY,sub;
-assign sub =1;
+assign sub = 1;
 wire [7:0] z3_1,z3_2;
 adder_subtractor_Nbit #(.N(8)) S_1 (.a(Xn),.b(Xe),.a_or_s(sub),.out(z3_1),.cout(signX));
 adder_subtractor_Nbit #(.N(8)) S_2 (.a(Yn),.b(Ye),.a_or_s(sub),.out(z3_2),.cout(signY));
@@ -130,5 +248,25 @@ wire sign_z3, cout_z1;
 assign sign_z3 = signX ^ signY;
 
 adder_subtractor_Nbit #(.N(16)) A_2 (.a(z1_1),.b(z3),.a_or_s(sign_z3),.out(z1),.cout(cout_z1));
+
+//Converting z1,z2,z3 to 32 bits
+
+wire [23:0] big_z0,big_z1,big_z0_z1;
+wire cout_z0_z1;
+assign big_z0 = 0;
+assign big_z1 = 0;
+assign big_z0[15:0] = z0;
+assign big_z1[23:16] = z1;
+
+adder_subtractor_Nbit #(.N(24)) A_3 (.a(big_z0),.b(big_z0),.a_or_s(add),.out(big_z0_z1),.cout(cout_z0_z1));
+
+wire [31:0] bigger_z2, bigger_z0_z1,z;
+wire dummy_cout;
+assign bigger_z2 = 0;
+assign bigger_z0_z1 = 0;
+assign bigger_z2[31:16] = z2;
+assign bigger_z0_z1[23:0] = big_z0_z1;
+
+rca_Nbit #(.N(32)) dut (.a(bigger_z2), .b(bigger_z0_z1), .cin(cout_z0_z1), .S(z), .cout(dummy_cout));
 
 endmodule
