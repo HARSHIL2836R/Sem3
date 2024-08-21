@@ -90,6 +90,7 @@ struct Entry {
   // define suitable fields here
   char* key;
   int value;
+  bool tomb;
 };
 
 class Dictionary {

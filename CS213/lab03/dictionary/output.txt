@@ -1,11 +1,11 @@
 Welcome to Dictionary 
->>> 116116Hash Value: 0
-Free Location: 0
-116Successfully Added 
->>> 116116Hash Value: 0
-Free Location: 1
-116Successfully Added 
->>> 116Entry not present
->>> 116Entry not present
->>> 116Entry not present
+>>> Hash Value: 60
+Free Location: 60
+Successfully Added 
+>>> Hash Value: 60
+Free Location: 61
+Successfully Added 
+>>> Entry not present
+>>> Entry not present
+>>> Entry not present
 >>> 
