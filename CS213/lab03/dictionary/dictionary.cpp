@@ -45,9 +45,9 @@ struct Entry* Dictionary::get(char key[]){
     int index = hashValue(key);
     int initial_index = index;
 
-    while (A[index].key!=key){
+    while (strcmp(A[index].key,key) != 0){
         index=(index +1)%N;
-        if (index == initial_index || (A[index].tomb == 1)){
+        if (index == initial_index || A[index].key == NULL){
             return NULL;
         }
     }
@@ -68,6 +68,7 @@ bool Dictionary::remove(char key[]){
     if (e == NULL){
         return false;
     }
+    e->key = "~";
     e->tomb = 1;
     return true;
 }

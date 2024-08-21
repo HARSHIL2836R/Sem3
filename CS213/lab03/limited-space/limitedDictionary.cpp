@@ -7,8 +7,8 @@ LimitedDictionary::LimitedDictionary(int capacity, Policy policy){
     }
     else{
         // Initialize the Limited Dictionary
-
         // YOUR CODE HERE
+        LimitedDictionary(capacity,policy);
     }
 }
 
@@ -17,7 +17,7 @@ void LimitedDictionary::evict_fifo(){
 
 
     // YOUR CODE HERE
-
+    
 
     // Make sure to flush the evicted key into std::cerr for testing
     // Modify this part

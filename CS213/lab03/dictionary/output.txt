@@ -5,7 +5,7 @@ Successfully Added
 >>> Hash Value: 60
 Free Location: 61
 Successfully Added 
->>> Entry not present
->>> Entry not present
+>>> Entry removed Successfully
+>>> Entry removed Successfully
 >>> Entry not present
 >>> 

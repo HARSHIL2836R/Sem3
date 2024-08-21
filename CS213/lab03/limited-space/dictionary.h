@@ -90,6 +90,7 @@ struct Entry {
   // define suitable fields here
   std::string key;
   int value;
+  bool tomb;
 };
 
 class Dictionary {
