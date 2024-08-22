@@ -12,7 +12,7 @@ Dictionary::Dictionary(){
 int Dictionary::hashValue(char key[]){
     int hashValue = 0;
     // compute hash
-    int p =33;//TODO: Try to figure out How to Use VS Code Debugger for C++
+    int p =33;
     long double multiplier = (sqrtl(5)-1)/2;//initially A
     long double encoding = 0;//We're using 64 bits because the fractional part also supports 64 bits only, however the value of largest power in the polynomial can reach nearly to 2^170
     int i = 0;
