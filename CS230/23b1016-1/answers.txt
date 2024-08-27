@@ -1,0 +1,8 @@
+Answer 1:
+    Parts I can't understand:
+        1. FP regs
+    Parts I can understand:
+        1. Text segment which shows the instructions, user defined and kernel instructions, I can't understand the addresses shown before the instructions
+        2. Data Segment shows the memory region occupied by User data, Kernel data and Stack data, whose visibility can be configured from the top bar
+        3. nt regs tab shows the value of the 32 bits registers in MIPS-32, along with PC (program counter) and other registers
+
