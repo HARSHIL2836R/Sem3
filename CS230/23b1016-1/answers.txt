@@ -1,8 +1,49 @@
 Answer 1:
-    Parts I can't understand:
-        1. FP regs
     Parts I can understand:
         1. Text segment which shows the instructions, user defined and kernel instructions, I can't understand the addresses shown before the instructions
         2. Data Segment shows the memory region occupied by User data, Kernel data and Stack data, whose visibility can be configured from the top bar
         3. nt regs tab shows the value of the 32 bits registers in MIPS-32, along with PC (program counter) and other registers
+        4. fp regs are the registers storing the address of the start of the stack frame
+
+QTSPIM:
+    Ans1:
+    Address of main is 0x004000024, you can see that instruction jal 0x00400024 [main] is running in the kernel
+    Alternatively, the $ra is getting assigned when the value of PC is the given address
+    
+    Ans2:
+    li is a pseudoinstruction, it is translated to ori $8, $0, 1
+
+    Ans3:
+    Machine code for li: 34080001, opcode is 001101
+    Machine code for addi: 21100002, opcode is 001000
+
+    Demo1:
+    After run, the registers that are changed are
+    PC: 40002c
+    v0 = 4
+    t0 = 1
+    s0 = 3
+    ra = 400018
+
+    Demo2:
+    The code runs as follows
+    For PC
+    400004: no change in registers
+    400008: no change in registers
+    40000c: value of a2 changes to 7ffff3c8 (it stores argument 3)
+    400010: v0 changes to 4 from 0 (stores evaluation and result of a function)
+    400014: as changes to 7ffff3cc
+    400024: ra changes to 400028 from 0
+    400028: t0 changes to 1 (li instruction)
+    40002c: so changes to 3 (addi instruction)
+
+    Demo4:
+    Modified add.s
+    # Add 0x20000001 and 0x10000002
+    lui $t0, 0x2000
+    ori $t1, $t0, 1
+    lui $t2, 0x1000
+    ori $t3, $t2, 2
+    add $s0, $t1, $t3
+
 
