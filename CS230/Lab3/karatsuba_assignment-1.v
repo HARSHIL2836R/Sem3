@@ -30,8 +30,8 @@ module iterative_karatsuba_32_16(clk, rst, enable, A, B, C);
     wire [63:0] g2;
     
     assign C = g2;
-    reg_with_enable #(.N(--)) Z(.clk(clk), .rst(rst), .en(en_z), .X(g1), .O(g2) );  // Fill in the proper size of the register
-    reg_with_enable #(.N(--)) T(.clk(clk), .rst(rst), .en(en_T), .X(h1), .O(h2) );  // Fill in the proper size of the register
+    reg_with_enable #(.N(63)) Z(.clk(clk), .rst(rst), .en(en_z), .X(g1), .O(g2) );  // Fill in the proper size of the register
+    reg_with_enable #(.N(32)) T(.clk(clk), .rst(rst), .en(en_T), .X(h1), .O(h2) );  // Fill in the proper size of the register
     
     iterative_karatsuba_datapath dp(.clk(clk), .rst(rst), .X(A), .Y(B), .Z(g2), .T(h2), .sel_x(sel_x), .sel_y(sel_y), .sel_z(sel_z), .sel_T(sel_T), .en_z(en_z), .en_T(en_T), .done(done), .W1(g1), .W2(h1));
     iterative_karatsuba_control control(.clk(clk),.rst(rst), .enable(enable), .sel_x(sel_x), .sel_y(sel_y), .sel_z(sel_z), .sel_T(sel_T), .en_z(en_z), .en_T(en_T), .done(done));
@@ -45,8 +45,8 @@ module iterative_karatsuba_datapath(clk, rst, X, Y, T, Z, sel_x, sel_y, en_z, se
     input [31:0] Y;    // Input Y
     input [32:0] T;    // input which sums X_h*Y_h and X_l*Y_l (its also a feedback through the register)
     input [63:0] Z;    // input which calculates the final outcome (its also a feedback through the register)
-    output [63:0] W1;  // Signals going to the registers as input
-    output [32:0] W2;  // signals hoing to the registers as input
+    output reg [63:0] W1;  // Signals going to the registers as input
+    output reg [32:0] W2;  // signals hoing to the registers as input
     
 
     input [1:0] sel_x;  // control signal 
@@ -60,11 +60,147 @@ module iterative_karatsuba_datapath(clk, rst, X, Y, T, Z, sel_x, sel_y, en_z, se
     input done;         // Final done signal
     
     
-   
+    
     
     //-------------------------------------------------------------------------------------------------
     
     // Write your datapath here
+    //Input to and output for 16 bit multiplier module
+    reg [15:0] mult_in_1,mult_in_2;
+    wire [31:0] mult_out;
+    mult_16 U0 (
+        .X(mult_in_1),.Y(mult_in_2),.Z(mult_out)
+    );
+
+    reg [63:0] adder_in_1, adder_in_2;
+    wire [63:0] adder_out;
+    wire adder_cout;
+    adder_Nbit #(.N(64)) U1 (
+        .a(adder_in_1),.b(adder_in_2),.cin(1'b0),.S(adder_out),.cout(adder_cout)
+    );
+
+    reg [15:0] sub_in_1, sub_in_2;
+    wire [15:0] sub_out;
+    wire sub_cout, ov;
+    subtract_Nbit #(.N(16)) U2 (
+        .a(sub_in_1), .b(sub_in_2), .cin(1'b0), .S(sub_out), .ov(ov), .cout_sub(sub_cout)
+    );
+
+    wire [15:0] sub_out_comp;
+    wire cout_comp;
+    Complement2_Nbit #(.N(16)) U3 (
+        .a(sub_out), .c(sub_out_comp), .cout_comp(cout_comp)
+    );
+
+    wire sign;
+    assign sign = T[32] ^ sub_cout;
+
+    reg [31:0] add_in_1, add_in_2;
+    wire [31:0] add_out;
+    wire add_cout;
+    adder_Nbit #(.N(32)) U4 (
+        .a(add_in_1), .b(add_in_2), .cin(1'b0), .S(add_out), .cout(add_cout)
+    );
+    wire [31:0] T_comp;
+    Complement2_Nbit #(.N(32)) U5 (
+        .a(T[31:0]), .c(T_comp), .cout_comp(cout_comp)
+    );
+
+    reg [31:0] add_sub_in_1, add_sub_in_2;
+    wire [31:0] add_sub_out;
+    reg add_sub_cin;
+    wire add_sub_cout;
+    adder_Nbit #(.N(32)) U6 (
+        .a(add_sub_in_1), .b(add_sub_in_2), .cin(add_sub_cin), .S(add_sub_out), .cout(add_sub_cout)
+    );
+
+    reg [63:0] big_add_in_1, big_add_in_2;
+    wire [63:0] big_add_out;
+    wire big_add_cout;
+    adder_Nbit #(.N(64)) U7 (
+        .a(big_add_in_1), .b(big_add_in_2), .cin(1'b0), .S(big_add_out), .cout(big_add_cout)
+    );
+
+    always @ * begin
+        case(sel_y)
+            2'b01: begin  // xl * yl -> W1l
+                mult_in_1 <= X[15:0];
+                mult_in_2 <= Y[15:0];
+                W1 <= {32'b0 , mult_out[31:0]};
+            end
+            2'b10: begin 
+                mult_in_1 <= X[31:16];
+                mult_in_2 <= Y[31:16];
+                W1 <= {mult_out[31:0], Z[31:0]};
+            end
+            2'b11: begin
+                mult_in_1 <= T[15:0];
+                W2 <= {sign,mult_out[31:0]};
+                case(sub_cout)
+                        1'b0: begin
+                            mult_in_2 <= sub_out;
+                        end
+                        1'b1: begin
+                            mult_in_2 <= sub_out_comp;
+                        end
+                endcase
+            end
+            default: begin
+                mult_in_1 <= {16'b0};
+                mult_in_2 <= {16'b0};
+            end
+        endcase
+
+        case(sel_T)
+            2'b00: begin
+                sub_in_1 <= X[31:16];
+                sub_in_2 <= X[15:0];
+                case (sub_cout)
+                    1'b0: begin
+                    W2 <= {sub_cout, 16'b0, sub_out};    
+                    end
+                    1'b1: begin
+                    W2 <= {sub_cout, 16'b0, sub_out_comp};    
+                    end
+                endcase
+            end
+            2'b01: begin
+                sub_in_1 <= Y[31:16];
+                sub_in_2 <= Y[15:0];
+                // Output of this subtractor goes to multiplier
+            end
+            2'b10: begin
+                add_in_1 <= Z[63:32];
+                add_in_2 <= Z[31:0];
+                add_sub_cin <= T[32];
+                case(T[32]) 
+                    1'b0: begin
+                        add_sub_in_1 <= T[31:0];
+                        add_sub_in_2 <= add_out[31:0];
+                        W2 <= {add_sub_cout,add_sub_out};
+                    end
+                    1'b1: begin
+                        add_sub_in_1 <= T_comp[31:0];
+                        add_sub_in_2 <= add_out[31:0];
+                        W2 <= {add_sub_cout,add_sub_out};
+                    end
+                endcase
+            end
+            2'b11: begin
+                big_add_in_1 <= Z[63:0];
+                big_add_in_2 <= {16'b0,T[31:0],16'b0};
+                W1 <= big_add_out;
+            end
+            default: begin
+                big_add_in_1 <= 64'b0;
+                big_add_in_2 <= 64'b0;
+                sub_in_1 <= 16'b0;
+                sub_in_2 <= 16'b0;
+                add_in_1 <= 32'b0;
+                add_in_2 <= 32'b0;
+            end
+        endcase
+    end
     //--------------------------------------------------------
 
 endmodule
@@ -88,8 +224,13 @@ module iterative_karatsuba_control(clk,rst, enable, sel_x, sel_y, sel_z, sel_T, 
     output reg done;
     
     reg [5:0] state, nxt_state;
-    parameter S0 = 6'b000001;   // initial state
-   // <define the rest of the states here>
+    parameter S0 = 6'b000001;   // xl * yl -> W1l
+    parameter S1 = 6'b000010;   // xh * yh -> W1h
+    parameter S2 = 6'b000100;   // xh - xl -> W2 [15:0], W2[32] = sub_cout
+    parameter S3 = 6'b001000;   // T * (yh - yl) -> W2 
+    parameter S4 = 6'b010000;   // T + (Zh + Zl) -> W2
+    parameter S5 = 6'b100000;   // Z + (T << 16) -> W1
+    parameter S6 = 6'b111111;   // done
 
     always @(posedge clk) begin
         if (rst) begin
@@ -105,13 +246,89 @@ module iterative_karatsuba_control(clk,rst, enable, sel_x, sel_y, sel_z, sel_T, 
         case(state) 
             S0: 
                 begin
-					// Write your output and next state equations here
+                    done <= 1'b0;
+                    if(enable) begin 
+                        sel_x <= 2'b01;
+                        sel_y <= 2'b01;
+                        en_z <= 1'b1;
+                        en_T <= 1'b0;
+                        sel_z <= 2'b00;
+                        sel_T <= 2'b00;
+                        
+                        nxt_state <= S1;
+                    end
                 end
-			// Define the rest of the states
-            default: 
+            S1: 
                 begin
-				// Don't forget the default
-                end            
+                    sel_x <= 2'b10;
+                    sel_y <= 2'b10;
+                    en_z <= 1'b1;
+                    en_T <= 1'b0;
+                    sel_z <= 2'b00;
+                    sel_T <= 2'b00;
+                    
+					nxt_state <= S2;
+                end
+            S2: 
+                begin
+                    sel_x <= 2'b11;
+                    sel_y <= 2'b00;
+                    en_z <= 1'b0;
+                    en_T <= 1'b1;
+                    sel_z <= 2'b00;
+                    sel_T <= 2'b00;
+                    
+					nxt_state <= S3;
+                end
+            S3: 
+                begin
+                    sel_x <= 2'b00;
+                    sel_y <= 2'b11;
+                    en_z <= 1'b0;
+                    en_T <= 1'b1;
+                    sel_z <= 2'b00;
+                    sel_T <= 2'b01;
+                    
+					nxt_state <= S4;
+                end
+            S4: 
+                begin
+                    sel_x <= 2'b00;
+                    sel_y <= 2'b00;
+                    en_z <= 1'b0;
+                    en_T <= 1'b1;
+                    sel_z <= 2'b00;
+                    sel_T <= 2'b10;
+                    
+					nxt_state <= S5;
+                end
+            S5: 
+                begin
+                    sel_x <= 2'b00;
+                    sel_y <= 2'b00;
+                    en_z <= 1'b1;
+                    en_T <= 1'b0;
+                    sel_z <= 2'b00;
+                    sel_T <= 2'b11;
+                    
+					nxt_state <= S6;
+                end
+            S6:
+                begin
+                    en_z <= 1'b0;
+                    en_T <= 1'b0;
+                    done <= 1'b1;
+                end
+            default:
+                begin
+                    sel_x <= 2'b00;
+                    sel_y <= 2'b00;
+                    en_z <= 1'b0;
+                    en_T <= 1'b0;
+                    sel_z <= 2'b00;
+                    sel_T <= 2'b00;
+                    done <= 1'b0;
+                end
         endcase
         
     end
