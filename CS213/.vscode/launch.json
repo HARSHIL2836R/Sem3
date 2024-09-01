@@ -4,7 +4,7 @@
             "name": "C/C++: g++-11 build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}",
             "args": ["0"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

@@ -23,14 +23,15 @@
 
 template <std::totally_ordered T>
 bool is_valid_bst(std::shared_ptr<struct node_t<T>> root, T l_limit, T r_limit) {
+    T null_struct;
 
     if (root == nullptr) return true;
     
     while (root->left_child != nullptr && root->right_child != nullptr ){
-        if (l_limit != (T)NULL && root->left_child != nullptr && root->left_child->value < l_limit){
+        if (l_limit != null_struct && root->left_child != nullptr && root->left_child->value < l_limit){
             return false;
         }
-        else if (r_limit != (T)NULL && root->right_child != nullptr && root->right_child->value > r_limit){
+        else if (r_limit != null_struct && root->right_child != nullptr && root->right_child->value > r_limit){
             return false;
         }
         return is_valid_bst(root->left_child,l_limit,root->value) && is_valid_bst(root->right_child,root->value,r_limit);
@@ -42,5 +43,6 @@ bool is_valid_bst(std::shared_ptr<struct node_t<T>> root, T l_limit, T r_limit) 
 
 template <std::totally_ordered T>
 bool is_valid_bst(std::shared_ptr<struct node_t<T>> root) {
-    return is_valid_bst(root, (T)NULL,(T)NULL);
+    T null_stuct;
+    return is_valid_bst(root, null_stuct, null_stuct);
 }

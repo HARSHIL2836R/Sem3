@@ -32,10 +32,10 @@ test_code::read_employee_tree_level(std::string &line) {
         if (token.empty()) {
             continue;
         }
-        if (token == "null") {
+        if (token == "null" or "null\r") {
             level.push_back(nullptr);
             continue;
-        } 
+        }
         std::istringstream token_iss(token);
         std::string name, department_name, id_in_department, job_title, salary;
         std::getline(token_iss, name, ',');
