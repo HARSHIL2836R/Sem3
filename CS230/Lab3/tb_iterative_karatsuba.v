@@ -27,11 +27,12 @@ always begin
 end
 
 initial begin
+    clk = 1'b1;
+    rst = 1'b0;
+    enable = 1'b0;
+
     $display("time\t, clk\t rst\t, X\t, Y\t, Z\t ");
     $monitor ("%g\t %b\t   %b\t     %d\t      %d\t      %d\t   ", $time, clk, rst, X, Y, Z);	
-
-    clk = 1;
-    rst = 0;
 
     /*
     #10 rst = 1;
@@ -46,8 +47,8 @@ initial begin
     */
     
     
-    #10 rst = 1;
-    #10 rst  = 0;
+    #5 rst = 1'b1;
+    #10 rst  = 1'b0;
     
     //#10 X = 4294967295;
     //    Y = 255;
@@ -56,23 +57,25 @@ initial begin
         enable = 1'b1;   
         
         
-    #50 rst = 1;
-        enable = 1'b0;
-        
+    #50 rst <= 1'b1;
+        enable <= 1'b0;
+    
+    #5 rst <= 1'b0;
+
     for (i=0; i<10; i=i+1) begin
         for (j=0; j<10; j=j+1) begin
             X = i; 
             Y = 12;
             enable = 1'b1; 
-            #50 
+            #50
             if (Z != X*Y) begin
                 $display("ERROR");
                 $monitor("%d\t", Z);
                 $finish;
             end 
-            #50 rst = 1;
+            #50 rst = 1'b1;
             enable = 1'b0;
-            #10 rst = 0;
+            #10 rst = 1'b0;
             
         end    
     end                

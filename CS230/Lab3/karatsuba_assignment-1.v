@@ -72,23 +72,16 @@ module iterative_karatsuba_datapath(clk, rst, X, Y, T, Z, sel_x, sel_y, en_z, se
         .X(mult_in_1),.Y(mult_in_2),.Z(mult_out)
     );
 
-    reg [63:0] adder_in_1, adder_in_2;
-    wire [63:0] adder_out;
-    wire adder_cout;
-    adder_Nbit #(.N(64)) U1 (
-        .a(adder_in_1),.b(adder_in_2),.cin(1'b0),.S(adder_out),.cout(adder_cout)
-    );
-
     reg [15:0] sub_in_1, sub_in_2;
     wire [15:0] sub_out;
     wire sub_cout, ov;
-    subtract_Nbit #(.N(16)) U2 (
+    subtract_Nbit #(.N(16)) U1 (
         .a(sub_in_1), .b(sub_in_2), .cin(1'b0), .S(sub_out), .ov(ov), .cout_sub(sub_cout)
     );
 
     wire [15:0] sub_out_comp;
     wire cout_comp;
-    Complement2_Nbit #(.N(16)) U3 (
+    Complement2_Nbit #(.N(16)) U2 (
         .a(sub_out), .c(sub_out_comp), .cout_comp(cout_comp)
     );
 
@@ -98,11 +91,11 @@ module iterative_karatsuba_datapath(clk, rst, X, Y, T, Z, sel_x, sel_y, en_z, se
     reg [31:0] add_in_1, add_in_2;
     wire [31:0] add_out;
     wire add_cout;
-    adder_Nbit #(.N(32)) U4 (
+    adder_Nbit #(.N(32)) U3 (
         .a(add_in_1), .b(add_in_2), .cin(1'b0), .S(add_out), .cout(add_cout)
     );
     wire [31:0] T_comp;
-    Complement2_Nbit #(.N(32)) U5 (
+    Complement2_Nbit #(.N(32)) U4 (
         .a(T[31:0]), .c(T_comp), .cout_comp(cout_comp)
     );
 
@@ -110,14 +103,14 @@ module iterative_karatsuba_datapath(clk, rst, X, Y, T, Z, sel_x, sel_y, en_z, se
     wire [31:0] add_sub_out;
     reg add_sub_cin;
     wire add_sub_cout;
-    adder_Nbit #(.N(32)) U6 (
+    adder_Nbit #(.N(32)) U5 (
         .a(add_sub_in_1), .b(add_sub_in_2), .cin(add_sub_cin), .S(add_sub_out), .cout(add_sub_cout)
     );
 
     reg [63:0] big_add_in_1, big_add_in_2;
     wire [63:0] big_add_out;
     wire big_add_cout;
-    adder_Nbit #(.N(64)) U7 (
+    adder_Nbit #(.N(64)) U6 (
         .a(big_add_in_1), .b(big_add_in_2), .cin(1'b0), .S(big_add_out), .cout(big_add_cout)
     );
 
@@ -224,6 +217,7 @@ module iterative_karatsuba_control(clk,rst, enable, sel_x, sel_y, sel_z, sel_T, 
     output reg done;
     
     reg [5:0] state, nxt_state;
+    parameter S = 6'b000000; //dummy start state
     parameter S0 = 6'b000001;   // xl * yl -> W1l
     parameter S1 = 6'b000010;   // xh * yh -> W1h
     parameter S2 = 6'b000100;   // xh - xl -> W2 [15:0], W2[32] = sub_cout
@@ -234,7 +228,7 @@ module iterative_karatsuba_control(clk,rst, enable, sel_x, sel_y, sel_z, sel_T, 
 
     always @(posedge clk) begin
         if (rst) begin
-            state <= S0;
+            state <= S;
         end
         else if (enable) begin
             state <= nxt_state;
@@ -243,11 +237,22 @@ module iterative_karatsuba_control(clk,rst, enable, sel_x, sel_y, sel_z, sel_T, 
     
 
     always@(*) begin
-        case(state) 
+        case(state)
+            S: begin
+                sel_x <= 2'b00;
+                sel_y <= 2'b00;
+                en_z <= 1'b1;
+                en_T <= 1'b0;
+                sel_z <= 2'b00;
+                sel_T <= 2'b00;
+                done <= 1'b0;
+
+                nxt_state <= S0;
+            end
             S0: 
                 begin
                     done <= 1'b0;
-                    if(enable) begin 
+                    if (enable) begin 
                         sel_x <= 2'b01;
                         sel_y <= 2'b01;
                         en_z <= 1'b1;
