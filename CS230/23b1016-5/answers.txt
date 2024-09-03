@@ -1,0 +1,2 @@
+Implmenting stack and frame pointer code is very hard, it can be improved by practice.
+The length of the code is also a factor increasing difficulty, but it can't be improved with practice
