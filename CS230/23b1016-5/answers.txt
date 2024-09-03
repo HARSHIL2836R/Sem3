@@ -1,2 +1,2 @@
-Implmenting stack and frame pointer code is very hard, it can be improved by practice.
+Implmenting stack and frame pointer code is very hard, it can be improved by practice. The fact that Stack grows downwards makes it difficult to choose values sp should be changed with.
 The length of the code is also a factor increasing difficulty, but it can't be improved with practice
