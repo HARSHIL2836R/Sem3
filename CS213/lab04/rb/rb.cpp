@@ -5,7 +5,7 @@ RedBlackTree::RedBlackTree(){}
 
 const ptr RedBlackTree::getRoot() const
 { 
-	return root; 
+	return root;
 }
 
 ptr RedBlackTree::insert(int data)
