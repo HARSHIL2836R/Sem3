@@ -2,6 +2,8 @@
 #include <stack>
 using namespace std;
 int main(){
+    int n;
+    cin>>n;
     stack<int> arr[10];
     arr[0].push(4);
     stack<int> * ptr = &arr[0];
