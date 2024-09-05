@@ -24,6 +24,8 @@
 template <std::totally_ordered T>
 bool is_valid_bst(std::shared_ptr<struct node_t<T>> root, T l_limit, T r_limit) {
     T null_struct;
+    null_struct.department_name = "";
+    null_struct.id_in_department = '\0';
 
     if (root == nullptr) return true;
     
@@ -43,6 +45,8 @@ bool is_valid_bst(std::shared_ptr<struct node_t<T>> root, T l_limit, T r_limit) 
 
 template <std::totally_ordered T>
 bool is_valid_bst(std::shared_ptr<struct node_t<T>> root) {
-    T null_stuct;
-    return is_valid_bst(root, null_stuct, null_stuct);
+    T null_struct;
+    null_struct.department_name = "";
+    null_struct.id_in_department = '\0';
+    return is_valid_bst(root, null_struct, null_struct);
 }

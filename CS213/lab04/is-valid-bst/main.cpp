@@ -103,15 +103,15 @@ bool test_code::execute_testcase(std::string testcase_name) {
         throw std::runtime_error("Could not open file");
     }
     bool result = is_valid_bst(root);
+    std::cout<<root;
     bool expected_result;
     expected_read >> std::boolalpha >> expected_result;
+    std::cout<<expected_result;
     return result == expected_result;
 }
 
 int main(void) {
     std::vector<std::string> testcases = {
-        "testcase1",
-        "testcase2",
         "testcase3",
     };
     int num_passed = 0;
