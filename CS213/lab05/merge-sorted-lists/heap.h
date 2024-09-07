@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <string.h>
 #pragma once
 
 /* You should NOT add ANY other includes in this file.
@@ -65,7 +66,24 @@ public:
 protected:
     std::vector<value_type> data;
     // TODO: Add you data members and helper functions here.
+    size_type sz = 0;
 
+    // heap Navigation
+    int parent(int);
+    int left(int);
+    int right(int);
+
+    // Heap interface
+    void swap(int i, int j);
+    int max();          // read max
+    void insert(const value_type& value); // insert key in heap
+    void heapify(int i);// heapify a node
+    void deleteMax();   // deletes max
+    void buildHeap();   // builds heap
+    void heapSort();    // sorts conentens of heap and does not physically delete
+                        // the content
+
+    void print(int i=0, const std::string& prefix="", bool isLeft=false);
     // End TODO
 };
 
@@ -73,22 +91,22 @@ protected:
 
 template <typename T, class Compare>
 heap_t<T, Compare>::heap_t() {
-  // Add your code here
+  
 }
 
 template <typename T, class Compare>
 heap_t<T, Compare>::~heap_t() {
-  // Add your code here
+  delete &data;
 }
 
 template <typename T, class Compare>
 heap_t<T, Compare>::heap_t(const heap_t& other) {
-  // Add your code here
+  data = vector(other);
 }
 
 template <typename T, class Compare>
 heap_t<T, Compare>::heap_t(heap_t&& other) noexcept {
-  // Add your code here
+  data = vector(other);
 }
 
 template <typename T, class Compare>
@@ -105,7 +123,7 @@ heap_t<T, Compare>& heap_t<T, Compare>::operator = (heap_t&& other) noexcept {
 
 template <typename T, class Compare>
 void heap_t<T, Compare>::push(const value_type& value) {
-  // Add your code here
+  insert(value);
 }
 
 template <typename T, class Compare>
@@ -114,7 +132,7 @@ typename heap_t<T, Compare>::value_type heap_t<T, Compare>::pop() {
         throw std::out_of_range("Heap is empty");
     }
     value_type top = data[0];
-    // Add your code here!
+    deleteMax();
     return top;
 }
 
@@ -128,16 +146,99 @@ typename heap_t<T, Compare>::const_reference heap_t<T, Compare>::top() const {
 
 template <typename T, class Compare>
 typename heap_t<T, Compare>::size_type heap_t<T, Compare>::size() const {
-  return 0; //dummy
+  return sz;
 }
 
 template <typename T, class Compare>
 bool heap_t<T, Compare>::empty() const {
-  return 0; // dummy
+  return sz == 0;
 }
 
 template <typename T, class Compare>
 void heap_t<T, Compare>::clear() {
+  data.clear();
+  sz = 0;
 }
 
 // End TODO
+
+//HELPER FUNCTIONS
+template <typename T, class Compare>
+int heap_t<T,Compare>::parent(int i) {
+  return (i-1)/2;
+}
+
+template <typename T, class Compare>
+int heap_t<T,Compare>::left(int i) {
+  return 2*i+1;
+}
+
+template <typename T, class Compare>
+int heap_t<T,Compare>::right(int i) {
+  return 2*i+2;
+}
+
+template <typename T, class Compare>
+int heap_t<T,Compare>::max() {
+  return data[0];
+}
+
+template <typename T, class Compare>
+void heap_t<T,Compare>::swap(int i, int j) {
+  iter_swap(data.begin()+i,data.begin()+j);
+}
+
+template <typename T, class Compare>
+void heap_t<T,Compare>::insert(const value_type& value) {
+  int i = data.size(); 
+  data.push_back(value);
+  sz++;
+  while (i > 0 && data[parent(i)] > data[i]){
+    swap(parent(i), i);
+    i = parent(i);
+  }
+}
+
+template <typename T, class Compare>
+void heap_t<T,Compare>::heapify(int i) {
+  int c = i;
+  if (right(i) < sz && data[i] < data[right(i)] && data[right(i)] > data[left(i)]){
+    c = right(i);
+  }
+  else if (left(i) < sz && data[i] < data[left(i)]){
+    c = left(i);
+  }
+  if (c == i){
+    return;
+  }
+  swap(c,i);
+  heapify(c);
+}
+
+
+template <typename T, class Compare>
+void heap_t<T,Compare>::deleteMax() {
+  swap(0, sz-1);
+  sz--;
+  heapify(0);
+}
+
+template <typename T, class Compare>
+void heap_t<T,Compare>::buildHeap() {
+  sz = data.size();
+  for (int i = sz-1; i >= 0; i--){
+    heapify(i);
+  }
+}
+
+template <typename T, class Compare>
+void heap_t<T,Compare>::heapSort() {
+  sz = data.size();
+  buildHeap();
+  while (sz > 0){
+    if (sz == 3){
+      int a = 1;
+    }
+    deleteMax();
+  }
+}
