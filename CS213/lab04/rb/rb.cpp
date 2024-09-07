@@ -25,8 +25,28 @@ ptr RedBlackTree::insert(int data)
 void RedBlackTree::insert(ptr start, ptr newnodePtr)
 {
 	// choose direction
-	
-	// recurse down the tree
+	if (start->data <= newnodePtr->data){
+		if (start->right == nullptr){
+			start->right = newnodePtr;
+			newnodePtr->parent = start;
+			if (newnodePtr->parent->color == 1){
+				fixup(newnodePtr);
+			}
+			return;
+		}
+		insert(start->right,newnodePtr);
+	}
+	else if (start->data >= newnodePtr->data){
+		if (start->left == nullptr){
+			start->left = newnodePtr;
+			newnodePtr->parent = start;
+			if (newnodePtr->parent->color == 1){
+				fixup(newnodePtr);
+			}
+			return;
+		}
+		insert(start->left,newnodePtr);
+	}
 
 	return;
 }
@@ -47,23 +67,108 @@ void RedBlackTree::printRBT(ptr start, const std::string& prefix, bool isLeftChi
 
 // Function performing right rotation
 // of the passed node
-void RedBlackTree::rightrotate(ptr loc)
-{
-	
+void RedBlackTree::rightrotate(ptr loc){ //don't care about conflicts here
+	if (loc->left == nullptr){
+		return;
+	}
+
+	ptr p = loc->parent;
+
+	if (p == nullptr){
+		root = loc->left;
+	}
+
+	else if (p->right != nullptr && p->right == loc){
+		p->right = loc->left;
+	}
+	else{
+		p->left = loc->left;
+	}
+	loc->left->parent = p;
+
+	ptr c = loc->left->right;
+	loc->left->right = loc;
+	if (c == nullptr){
+		loc->left = nullptr;
+	}
+	else {
+		loc->left = c;
+		c->parent = loc;
+	}
 }
 
 // Function performing left rotation
 // of the passed node
-void RedBlackTree::leftrotate(ptr loc)
-{
+void RedBlackTree::leftrotate(ptr loc){
+	if (loc->right == nullptr){
+		return;
+	}
+
+	ptr p = loc->parent;
+
+	if (p == nullptr){
+		root = loc->right;
+	}
+
+	else if (p->right != nullptr && p->right == loc){
+		p->right = loc->right;
+	}
+	else{
+		p->left = loc->right;
+	}
+	loc->right->parent = p;
+
+	ptr c = loc->right->left;
+	loc->right->left = loc;
+	if (c == nullptr){
+		loc->right = nullptr;
+	}
+	else {
+		loc->right = c;
+		c->parent = loc;
+	}
 	
 }
 
 // This function fixes violations
 // caused by RBT insertion
-void RedBlackTree::fixup(ptr loc)
-{
-	
+void RedBlackTree::fixup(ptr loc) //Conflict between current node and parent node
+{//parent is red => parent is not root
+	if (loc->parent == nullptr){
+		loc->color = 0;
+		return;
+	}
+	if (!(loc->color == 1 && loc->parent->color == 1)){
+		return;
+	}
+	ptr uncle = loc->parent->data > loc->parent->parent->data ? loc->parent->parent->left : loc->parent->parent->right;
+
+	if (uncle == nullptr || uncle->color == 0){
+		bool straight = loc->data > loc->parent->data ? (loc->parent->data > loc->parent->parent->data ? true : false): (loc->parent->data > loc->parent->parent->data ? false : true);
+		if (!straight){
+			bool right = (loc->data > loc->parent->data) ? false : true;
+			if (right) rightrotate(loc->parent);
+			else leftrotate(loc->parent);
+			fixup(loc);
+		}
+		else{
+			loc->parent->color = 0;
+			loc->parent->parent->color = 1;
+			bool left = (loc->data > loc->parent->data) ? true:false;
+			if (left){
+				leftrotate(loc->parent->parent);
+			}
+			else {
+				rightrotate(loc->parent->parent);
+			}
+		}
+	}
+	else if (uncle->color == 1){
+		uncle->color = 0;
+		loc->parent->color = 0;
+		loc->parent->parent->color = 1;
+		fixup(loc->parent->parent);
+	}
 }
 
 // Function to print inorder traversal
