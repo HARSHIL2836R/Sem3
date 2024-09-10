@@ -46,7 +46,14 @@ struct student_t {
 class compare_by_heights {
 public:
     // TODO: Write your code here.
-    
+    bool comp(const student_t& a, const student_t& b){
+        if (a.height <= b.height){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
      // End TODO
 };
 

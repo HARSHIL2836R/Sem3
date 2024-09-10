@@ -1,0 +1,17 @@
+The Structure of Stack is:
+    $ra
+    a4 val to check
+    $a3 end
+    $a2 start
+    $a1 len
+    $a0 Address of Array
+
+Stack Depth will be maximum when the number of function calls is maximum, that would be in the case when the value is not in the array (when condition end > start will evaluate to true), the breakpoint should be at line 95: addi $v0, $s5 in the branch ret_false to see the stack at it's maximum size
+
+The call activation record would look like:
+    1. main 
+    2. binarySearch(A,10,0,9,15)->upper
+    2. binarySearch(A,10,5,9,15)->upper
+    2. binarySearch(A,10,8,9,15)->upper
+    2. binarySearch(A,10,9,9,15)->upper
+    2. binarySearch(A,10,10,9,15)->ret_false

@@ -20,6 +20,7 @@ template <typename T, class Compare>
 std::shared_ptr<struct list_node_t<T>> merge_sorted_lists(
         std::vector<std::shared_ptr<struct list_node_t<T>>> lists) {
     // TODO: Write your code here
+    
     return nullptr; // dummy return
     // End TODO
 }
