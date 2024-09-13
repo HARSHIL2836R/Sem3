@@ -12,5 +12,8 @@ test:
 	./$(TARGET) < inputs/input0.txt > output0.txt
 	diff outputs/output0.txt output0.txt
 
+	./$(TARGET) < inputs/input1.txt > output1.txt
+	diff outputs/output1.txt output1.txt
+
 clean:
 	rm -f $(TARGET) output0.txt

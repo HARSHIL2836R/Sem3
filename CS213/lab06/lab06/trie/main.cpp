@@ -18,8 +18,8 @@ int main()
 
     Trie* tr = new Trie();
 	struct TrieNode *root = tr->getNode();
-
 	// Construct trie
+
 	for (int i = 0; i < n; i++)
 		tr->insert(root, keys[i]);
 

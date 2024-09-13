@@ -35,15 +35,53 @@ Please also test the code with your OWN test cases.
 
 #include <iostream>
 #include <cstring>
+#include <cassert>
 
 // Fills h[] for given pattern pat[0..M-1]
 void computeKMPTable(char* pat, int M, int* h)
 {
-
+  int i = 1,  j = 0;
+  h[0] = -1;
+  while (i < M){
+    if (pat[i] != pat[j]){
+      h[i] = j;
+      while (j>= 0 && pat[i] != pat[j]){
+        j = h[j];
+      }
+    }
+    else{
+      h[i] = h[j];
+    }
+    i++;j++;
+  }
+  h[i] = j;
 }
 
 // Prints occurrences of txt[] in pat[]
 void KMPSearch(char* pat, char* txt)
 {
+  assert (*pat != '\0');
+  int sz = 0;
+  while (pat[sz] != '\0'){
+    sz++;
+  }
+  int i = 0 , j = 0;
+  int h[sz+1];
+  computeKMPTable(pat,sz+1,h);
+  while (txt[i] != '\0'){
+    if (pat[j] == txt[i]){
+      i++;j++;
+      if (j == sz){
+        printf("Found pattern at index %d \n", i - j);
+        j = h[j];
+      }
+    }
+    else{
+      j = h[j];
+      if (j<0){
+        i++;j++;
+      }
+    }
+  }
 	// printf("Found pattern at index %d \n", index_where_found);
 }

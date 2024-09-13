@@ -1,0 +1,6 @@
+Found pattern at index 0 
+Found pattern at index 6 
+Found pattern at index 8 
+Found pattern at index 10 
+Found pattern at index 12 
+Found pattern at index 14 
