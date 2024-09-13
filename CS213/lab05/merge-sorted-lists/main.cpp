@@ -31,6 +31,7 @@ bool test_cases::match_outputs(std::string file1, std::string file2) {
 }
 
 bool test_cases::test_heap() {
+    std::cout<<"testing_heap"<<std::endl;
     std::ifstream input("testcases/heap.txt");
     std::ofstream output("outputs/heap.txt");
     if (!input.is_open()) {
@@ -93,6 +94,7 @@ std::shared_ptr<struct list_node_t<struct student_t>> test_cases::read_list(
 }
 
 bool test_cases::test_merge_sorted_lists() {
+    std::cout<<"testing_merge_sorted_lists"<<std::endl;
     std::ifstream ninth("testcases/ninth_class.txt");
     std::ifstream tenth("testcases/tenth_class.txt");
     std::ifstream eleventh("testcases/eleventh_class.txt");

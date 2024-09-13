@@ -46,8 +46,8 @@ struct student_t {
 class compare_by_heights {
 public:
     // TODO: Write your code here.
-    bool comp(const student_t& a, const student_t& b){
-        if (a.height <= b.height){
+    bool comp(const std::shared_ptr<struct list_node_t<student_t>>& a, const std::shared_ptr<struct list_node_t<student_t>>& b){
+        if (a->data.height <= b->data.height){
             return true;
         }
         else{

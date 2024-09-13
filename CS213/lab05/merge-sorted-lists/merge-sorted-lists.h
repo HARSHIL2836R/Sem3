@@ -17,10 +17,27 @@
  */
 
 template <typename T, class Compare>
-std::shared_ptr<struct list_node_t<T>> merge_sorted_lists(
-        std::vector<std::shared_ptr<struct list_node_t<T>>> lists) {
+std::shared_ptr<struct list_node_t<T>> merge_sorted_lists(std::vector<std::shared_ptr<struct list_node_t<T>>> lists) {
     // TODO: Write your code here
-    
-    return nullptr; // dummy return
+    heap_t<std::shared_ptr<struct list_node_t<T>>,Compare> hp;
+    for (auto i = lists.begin();i<lists.end();i++) {
+        hp.push(*i);
+    }
+    std::shared_ptr<struct list_node_t<T>> root = nullptr;
+    std::shared_ptr<struct list_node_t<T>> prev_node = nullptr;
+
+    while(!hp.empty()) {
+        if (root == nullptr) {
+            root = hp.pop();
+            prev_node = root;
+            hp.push(root->next);
+        }
+        prev_node->next = hp.pop();
+        prev_node->next->prev = prev_node;
+        hp.push(prev_node->next->next);
+        prev_node = prev_node->next;
+    }
+
+    return root;
     // End TODO
 }

@@ -243,14 +243,14 @@ void heap_t<T,Compare>::heapSort() {
   }
 }
 
-template <typename T, class Compare>
+/*template <typename T, class Compare>
 inline void heap_t<T,Compare>::print(int i, const std::string& prefix, bool isLeft)
 {
     if( size() > i && i >= 0 )
     {
-      cout << prefix << (isLeft ? "|--" : "|__" ) << store[i] << endl;
+      std::cout << prefix << (isLeft ? "|--" : "|__" ) << std::__atomic_impl::store[i] << std::endl;
       // enter the next tree level - left and right branch
       print( left(i), prefix + (isLeft ? "│   " : "    "), true);
       print( right(i), prefix + (isLeft ? "│   " : "    "), false);
     }
-}
+}*/
