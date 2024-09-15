@@ -47,11 +47,11 @@ Please test the code on your own.
 
 // trie node
 struct TrieNode {
-	struct TrieNode* children[ALPHABET_SIZE];
+	struct TrieNode* children[ALPHABET_SIZE] = {NULL};
 
 	// isWordEnd is true if the node represents
 	// end of a word
-	bool isWordEnd;
+	bool isWordEnd = false;
 };
 
 class Trie

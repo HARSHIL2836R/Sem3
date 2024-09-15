@@ -1,4 +1,0 @@
-the --- Present in trie
-these --- Present in trie
-their --- Present in trie
-thaw --- Present in trie
