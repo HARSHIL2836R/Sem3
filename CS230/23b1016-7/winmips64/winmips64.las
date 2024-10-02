@@ -1,0 +1,1 @@
+C:\Users\Dell\Documents\IIT_academics\Sem 3\CS230\23b1016-7\winmips64\winmips64-lab.s
