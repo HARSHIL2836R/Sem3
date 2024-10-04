@@ -10,6 +10,7 @@
  * Read the file "tree.h" for your tasks, and do them in files "encode_tree.cpp"
  * and "decode_tree.cpp". This file tests your code.
  * */
+// set follow-fork-mode child for gdb debugging
 
 namespace tester {
     void write_to_file(std::string f_name, std::string encoded);
