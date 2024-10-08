@@ -1,0 +1,7 @@
+1. 
+With Forwarding enabled, the number of cycles for each case is 31
+Without Forwarding enabled, the number of cycles for each case is 41
+Speedup = 295/221 = 1.33
+
+2.
+Speedup = 285/211 = 1.35
