@@ -10,7 +10,9 @@ private:
 public:
     rle(int gamma=4);
     string compress(string input);
+    string compress_old(string input);
     string decompress(string input);
+    string decompress_old(string input);
     // function converting int to gamma-bit binary 
     string f(int i);
     // function converting gamma-bit binary to int
