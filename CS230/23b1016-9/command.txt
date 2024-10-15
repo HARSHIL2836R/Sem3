@@ -1,0 +1,1 @@
+./dineroIV -l1-usize 4096 -l1-ubsize 8 -l1-uassoc 1 -l1-uwback a -l1-uwalloc a -informat d < d4-traces/d4-traces/cc1.din

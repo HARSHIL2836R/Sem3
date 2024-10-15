@@ -1,0 +1,57 @@
+For file: tex.din
+For block size: 4
+0.0183
+For block size: 8
+0.0092
+For block size: 16
+0.0049
+For block size: 32
+0.0027
+For block size: 64
+0.0019
+For block size: 128
+0.0030
+For block size: 256
+0.0053
+For block size: 512
+0.0145
+For block size: 1024
+0.0396
+For file: spice.din
+For block size: 4
+0.0729
+For block size: 8
+0.0497
+For block size: 16
+0.0359
+For block size: 32
+0.0276
+For block size: 64
+0.0266
+For block size: 128
+0.0251
+For block size: 256
+0.0254
+For block size: 512
+0.0338
+For block size: 1024
+0.0430
+For file: cc1.din
+For block size: 4
+0.1968
+For block size: 8
+0.1214
+For block size: 16
+0.0823
+For block size: 32
+0.0600
+For block size: 64
+0.0485
+For block size: 128
+0.0430
+For block size: 256
+0.0417
+For block size: 512
+0.0468
+For block size: 1024
+0.0644

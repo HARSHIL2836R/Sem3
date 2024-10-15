@@ -1,0 +1,28 @@
+Q1 Lines at which first non-Compulsory miss occurs:
+    For cc1.din, 225th Line
+    For spice.din, 2072th Line
+    For tex.din, 82nd Line
+
+Q2 With increasing cache size, write misses reduce signifantly because there is more space available to write
+
+Q3 With increasing block size, initially spatial locality will supress the amount of misses but eventually replacement misses will take over (block size is full) and miss rate increases
+
+Q4 With increasing associativity (number of blocks in set), the set size increases allowing for more blocks to store data hence miss rate decreases. Similar to first graph
+
+-------------------------------------------------------------------------------------------
+Used this bash file to generate data:
+
+#!/bin/bash
+x=4096
+s=("1" "2" "4" "8" "16" "32" "64" "128" "256" "512") 
+f=("tex.din"    "spice.din" "cc1.din")
+for f in ${f[@]};
+do
+    echo "For assoc: "$f >> output3.txt
+    for x in ${s[@]}; 
+    do
+        echo "For block size: "$x
+        y="./dineroIV -l1-usize 8192 -l1-ubsize 16 -l1-uassoc ${x} -l1-uwback a -l1-uwalloc a -informat d -l1-uccc"
+        $y < d4-traces/d4-traces/$f | grep "Demand miss rate" | awk '{print $4}' >> output3.txt
+    done
+done
