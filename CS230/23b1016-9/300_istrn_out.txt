@@ -1,0 +1,53 @@
+---Dinero IV cache simulator, version 7
+---Written by Jan Edler and Mark D. Hill
+---Copyright (C) 1997 NEC Research Institute, Inc. and Mark D. Hill.
+---All rights reserved.
+---Copyright (C) 1985, 1989 Mark D. Hill.  All rights reserved.
+---See -copyright option for details
+
+---Summary of options (-help option gives usage information).
+
+-l1-usize 4096
+-l1-ubsize 8
+-l1-usbsize 8
+-l1-uassoc 1
+-l1-urepl l
+-l1-ufetch d
+-l1-uwalloc a
+-l1-uwback a
+-l1-uccc
+-skipcount 0
+-flushcount 0
+-maxcount 300
+-stat-interval 0
+-informat d
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Maximum address count exceeded.
+---Simulation complete.
+l1-ucache
+ Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
+ -----------------	      ------	      ------	      ------	      ------	      ------	      ------
+ Demand Fetches		         300	         224	          76	          49	          27	           0
+  Fraction of total	      1.0000	      0.7467	      0.2533	      0.1633	      0.0900	      0.0000
+
+ Demand Misses		         153	         116	          37	          26	          11	           0
+  Demand miss rate	      0.5100	      0.5179	      0.4868	      0.5306	      0.4074	      0.0000
+   Compulsory misses	         152	         116	          36	          26	          10	           0
+   Capacity misses	           0	           0	           0	           0	           0	           0
+   Conflict misses	           1	           0	           1	           0	           1	           0
+   Compulsory fraction	      0.9935	      1.0000	      0.9730	      1.0000	      0.9091	      0.0000
+   Capacity fraction	      0.0000	      0.0000	      0.0000	      0.0000	      0.0000	      0.0000
+   Conflict fraction	      0.0065	      0.0000	      0.0270	      0.0000	      0.0909	      0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory	        1224
+ ( / Demand Fetches)	      4.0800
+ Bytes To Memory	         112
+ ( / Demand Writes)	      4.1481
+ Total Bytes r/w Mem	        1336
+ ( / Demand Fetches)	      4.4533
+
+---Execution complete.

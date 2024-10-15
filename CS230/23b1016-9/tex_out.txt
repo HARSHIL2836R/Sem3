@@ -1,0 +1,16 @@
+For size: 4096
+  Demand miss rate            0.0051          0.0004          0.0169       0.0158           0.0183          0.0000
+For size: 8192
+  Demand miss rate            0.0049          0.0003          0.0164       0.0151           0.0181          0.0000
+For size: 16384
+  Demand miss rate            0.0035          0.0002          0.0120       0.0072           0.0179          0.0000
+For size: 32768
+  Demand miss rate            0.0029          0.0001          0.0102       0.0040           0.0179          0.0000
+For size: 65536
+  Demand miss rate            0.0029          0.0001          0.0102       0.0040           0.0179          0.0000
+For size: 131072
+  Demand miss rate            0.0029          0.0001          0.0101       0.0039           0.0179          0.0000
+For size: 262144
+  Demand miss rate            0.0029          0.0001          0.0101       0.0039           0.0179          0.0000
+For size: 524288
+  Demand miss rate            0.0029          0.0001          0.0101       0.0039           0.0179          0.0000

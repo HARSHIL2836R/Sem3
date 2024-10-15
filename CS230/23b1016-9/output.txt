@@ -1,0 +1,51 @@
+For file: tex.din
+For size: 4096
+0.0051
+For size: 8192
+0.0049
+For size: 16384
+0.0035
+For size: 32768
+0.0029
+For size: 65536
+0.0029
+For size: 131072
+0.0029
+For size: 262144
+0.0029
+For size: 524288
+0.0029
+For file: spice.din
+For size: 4096
+0.0641
+For size: 8192
+0.0359
+For size: 16384
+0.0151
+For size: 32768
+0.0069
+For size: 65536
+0.0042
+For size: 131072
+0.0038
+For size: 262144
+0.0038
+For size: 524288
+0.0038
+For file: cc1.din
+For size: 4096
+0.1217
+For size: 8192
+0.0823
+For size: 16384
+0.0478
+For size: 32768
+0.0263
+For size: 65536
+0.0180
+For size: 131072
+0.0151
+For size: 262144
+0.0134
+For size: 524288
+0.0126
