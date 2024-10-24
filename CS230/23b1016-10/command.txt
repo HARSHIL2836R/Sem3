@@ -1,0 +1,4 @@
+gcc mat_mult.cc -o mat_mult.out
+gcc mat_mult_opt.cc -o mat_mult_opt.out
+./mat_mult.out 2>log 1| ./d4/dineroIV -l1-usize 131072 -l1-ubsize 64 -l1-uassoc 1 -l1-uwback a -l1-uwalloc a -informat d > dinero_out.txt
+./mat_mult_opt.out 2>log 1| ./d4/dineroIV -l1-usize 131072 -l1-ubsize 64 -l1-uassoc 1 -l1-uwback a -l1-uwalloc a -informat d > opt_dinero_out.txt
