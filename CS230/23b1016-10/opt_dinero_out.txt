@@ -7,14 +7,14 @@
 
 ---Summary of options (-help option gives usage information).
 
--l1-usize 131072
--l1-ubsize 64
--l1-usbsize 64
--l1-uassoc 1
--l1-urepl l
--l1-ufetch d
--l1-uwalloc a
--l1-uwback a
+-l1-dsize 131072
+-l1-dbsize 64
+-l1-dsbsize 64
+-l1-dassoc 1
+-l1-drepl l
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
 -skipcount 0
 -flushcount 0
 -maxcount 0
@@ -25,7 +25,7 @@
 
 ---Simulation begins.
 ---Simulation complete.
-l1-ucache
+l1-dcache
  Metrics		      Total	      Instrn	       Data	       Read	      Write	       Misc
  -----------------	      ------	      ------	      ------	      ------	      ------	      ------
  Demand Fetches		     4000000	           0	     4000000	     3000000	     1000000	           0

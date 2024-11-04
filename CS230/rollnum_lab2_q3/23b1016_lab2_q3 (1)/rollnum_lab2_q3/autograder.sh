@@ -12,7 +12,7 @@ vvp base_design > base_output.txt
 base_output=$(cat base_output.txt)
 
 # Loop through all the roll number Verilog files in the directory
-for file in *_combinational_karatsuba.v; do
+for file in 23b1016_combinational_karatsuba.v; do
     # Extract the roll number (part before "_combinational_karatsuba.v")
     roll_number=$(echo "$file" | sed 's/_combinational_karatsuba.v//')
     
@@ -51,6 +51,6 @@ for file in *_combinational_karatsuba.v; do
 done
 
 # Optional: Clean up temporary files
-#rm output.txt my_design base_output.txt base_design
+rm output.txt my_design base_output.txt base_design
 
 echo "Simulations completed. Results saved in $results_file and comparisons in $comparison_file."

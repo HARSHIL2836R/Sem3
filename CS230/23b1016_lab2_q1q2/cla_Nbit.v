@@ -80,7 +80,7 @@ module CLA_16bit(a, b, cin, sum, cout, Pout, Gout);
     reg C1,C2,C3;
     reg P0,P1,P2,P3,G0,G1,G2,G3;
     CLA_4bit_P_G cla1(a[3:0],b[3:0],sum[3:0], P0,G0);
-    CLA_4bit_P_G cla1(a[3:0],b[3:0],sum[3:0],cout[3:0]);
+    CLA_4bit_P_G cla2(a[3:0],b[3:0],sum[3:0],cout[3:0]);
 endmodule
 
 
