@@ -1,0 +1,12 @@
+Copy your "useful-extra-edges.cpp" to this current directory.
+Run `python3 grade.py` (or `python grade.py` depending on what is available) to evaluate.
+
+There are 7 testcases in `testcases/`. First 6 are 1 mark each and the last one is worth 2.
+Explanation for the testcases is given in `explanation.txt`.
+
+There is a timeout of 5s set. If you wrote an efficient solution, large testcases should anyways happen instantly.
+
+Straight 0 if your code doesn't compile.
+Straight 0 if there are more than 1 #include in your .cpp file.
+
+A possible correct solution is present in `solution/`.
