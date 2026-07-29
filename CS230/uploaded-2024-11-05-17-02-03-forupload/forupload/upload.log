@@ -1,0 +1,129 @@
+23B1016
+sl1-52
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp7s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 9c:6b:00:53:a4:66 brd ff:ff:ff:ff:ff:ff
+    inet 10.130.153.52/24 brd 10.130.153.255 scope global noprefixroute enp7s0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::13d4:2bc:5c20:1ac7/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+============================================================
+ROLLNUM=23B1016, workdir=/home/cs231exam5nov/Downloads/endsem-workdir
+T=2024-11-05 14:26:49.269
+pu_res=0
+curl_res=0
+T=2024-11-05 14:31:49.294
+pu_res=0
+curl_res=0
+T=2024-11-05 14:36:49.326
+pu_res=0
+curl_res=0
+T=2024-11-05 14:41:49.350
+pu_res=0
+curl_res=0
+T=2024-11-05 14:46:49.383
+pu_res=0
+curl_res=0
+T=2024-11-05 14:51:49.407
+pu_res=0
+curl_res=0
+T=2024-11-05 14:56:49.431
+pu_res=0
+curl_res=0
+T=2024-11-05 15:01:49.455
+pu_res=0
+curl_res=0
+T=2024-11-05 15:06:49.479
+pu_res=0
+curl_res=0
+T=2024-11-05 15:11:49.512
+pu_res=0
+curl_res=0
+T=2024-11-05 15:16:49.545
+pu_res=0
+curl_res=0
+T=2024-11-05 15:21:49.569
+pu_res=0
+curl_res=0
+T=2024-11-05 15:26:49.593
+pu_res=0
+curl_res=0
+T=2024-11-05 15:31:49.617
+pu_res=0
+curl_res=0
+T=2024-11-05 15:36:49.639
+pu_res=0
+curl_res=0
+T=2024-11-05 15:41:49.663
+pu_res=0
+curl_res=0
+T=2024-11-05 15:46:49.687
+pu_res=0
+curl_res=0
+T=2024-11-05 15:51:49.711
+pu_res=0
+curl_res=0
+T=2024-11-05 15:56:49.737
+pu_res=0
+curl_res=0
+T=2024-11-05 16:01:49.761
+pu_res=0
+curl_res=0
+T=2024-11-05 16:06:49.785
+pu_res=0
+curl_res=0
+T=2024-11-05 16:11:49.809
+pu_res=0
+curl_res=0
+T=2024-11-05 16:16:49.834
+pu_res=0
+curl_res=0
+T=2024-11-05 16:21:49.858
+pu_res=0
+curl_res=0
+T=2024-11-05 16:26:49.882
+pu_res=0
+curl_res=0
+T=2024-11-05 16:31:49.905
+pu_res=0
+curl_res=0
+T=2024-11-05 16:36:49.929
+pu_res=0
+curl_res=0
+T=2024-11-05 16:41:49.961
+pu_res=0
+curl_res=0
+T=2024-11-05 16:46:49.987
+pu_res=0
+curl_res=0
+T=2024-11-05 16:51:50.011
+pu_res=0
+curl_res=0
+T=2024-11-05 16:56:50.044
+pu_res=0
+curl_res=0
+T=2024-11-05 17:01:50.069
+pu_res=0
+curl_res=0
+23B1016
+sl1-52
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp7s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 9c:6b:00:53:a4:66 brd ff:ff:ff:ff:ff:ff
+    inet 10.130.153.52/24 brd 10.130.153.255 scope global noprefixroute enp7s0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::13d4:2bc:5c20:1ac7/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+============================================================
+ROLLNUM=23B1016, workdir=/home/cs231exam5nov/Downloads/endsem-workdir
+T=2024-11-05 17:02:03.908

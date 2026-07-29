@@ -12,7 +12,7 @@ servers_t::servers_t(long long __num_servers) {
     }
 
     next_request_id = 0;
-    std::cout<<"Checkpoint 1"<<std::endl;
+    
     // End TODO
 }
 
@@ -26,12 +26,12 @@ void servers_t::add_request(long long __timestamp, long long __duration) {
     // TODO: Write your code here
     int id = next_request_id++;
     for (long long k = 0; k<num_servers;k++){
-        if (servers[k]>0) {servers[k] = servers[k] -  (__timestamp - last_timestamp);}
+        if (servers[k]>0) servers[k] = servers[k] -  (__timestamp - last_timestamp);
     }
-    long long i = id;
+    long long i = id%num_servers;
     long long count = 0;
     while (servers[i]>0 && count < num_servers+1) {
-        i = (i + 1)%(num_servers-1);
+        i = (i + 1)%num_servers;
         count++;
     }
     if (count == num_servers +1) return; //drop the request
@@ -39,16 +39,13 @@ void servers_t::add_request(long long __timestamp, long long __duration) {
     requests[i] = requests[i] + 1;
     servers[i] = __duration;
     last_timestamp = __timestamp;
-    // std::cout<<"Checkpoint 2"<<std::endl;
     // End TODO
 }
 
 std::set<long long> servers_t::get_servers_that_served_maximum_requests(void) {
     // TODO: Write your code here
     std::set<long long> res;
-    std::cout<<"fuck"<<std::endl;
     int max = requests[0];
-    std::cout<<requests.size()<<" "<<num_servers<<std::endl;
     for (long long i = 0; i < num_servers; i++)
     {
         if (max < requests[i]){
@@ -58,7 +55,7 @@ std::set<long long> servers_t::get_servers_that_served_maximum_requests(void) {
         }
         else if (max == requests[i]) res.insert(i);
     }
-    std::cout<<"Checkpoint 3"<<std::endl;
+    if (max == 0 ) return {};
     // std::cerr<<*res.begin();
     // std::cerr<<requests[1];
     return res; // dummy return

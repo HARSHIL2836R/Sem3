@@ -1,0 +1,87 @@
+========================================
+Your Name: HARSHIL SOLANKI
+Your Rollnum: 23B1016
+
+========================================
+Answer 1a
+29
+
+========================================
+Answer 1b
+EX/MEM to ID
+
+========================================
+Answer 1c
+There are no control hazard stalls because branch delay slots are enabled and it assumes
+that branch is not taken. For this the code also incorporates a 'nop' operation after every branch 
+instruction.
+
+========================================
+Answer 1d
+61
+
+========================================
+Answer 1e
+No, it should not be considered as a Str stall because at that cycle only, EX has been forwarded 
+the value of R5 and it would take a cycle to compute the result and will write back to R5
+in the next cycle. This is not a shortage of hardware.
+
+========================================
+Answer 1f
+50
+
+========================================
+Answer 1g
+EX/MEM to ID
+
+========================================
+Answer 1h
+61
+
+========================================
+Answer 1i
+25 after 28
+
+========================================
+Answer 2a
+31
+
+========================================
+Answer 2b
+18
+
+========================================
+Answer 2c
+-1
+
+========================================
+Answer 2d
+0
+
+========================================
+Answer 2e
+48
+
+========================================
+Answer 2f
+16
+
+========================================
+Answer 2g
+54,57
+
+========================================
+Answer 2h
+Because 53 is modifyng R2 and if is ran when the branch is being taken, then it will end
+in unexpected behaviour because R2 will no more store the value of i which it is supposed to,
+because R2 will be used in printing if branch not taken.
+
+========================================
+Answer 3
+144
+
+========================================
+Answer 4
+sltu R5, R2, R3
+
+========================================

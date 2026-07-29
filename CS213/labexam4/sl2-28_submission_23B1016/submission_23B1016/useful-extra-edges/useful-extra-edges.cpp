@@ -46,9 +46,9 @@ void Testcase::getMinWeight() {
         std::cout<<"0";
         return;
     }
-    int min_dist = INT_MAX;
     std::vector sp(n+1,INT_MAX);
     Dijkstra(Edges,sp,n,src);
+    int min_dist = sp[dest];
     if (min_dist == INT_MAX){
         for (auto& edge: ExtraEdges){
             std::vector sp(n+1,INT_MAX);

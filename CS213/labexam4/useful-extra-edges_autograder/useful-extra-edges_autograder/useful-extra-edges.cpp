@@ -12,93 +12,53 @@
  * Do not print anything else.
  */
 
-#define ll long long
-
-void Dijkstra(std::vector<std::vector<std::pair<int,int>>>& adj, std::vector<ll>& dist,
- std::priority_queue<std::pair<ll, int>>& pq, std::vector<bool>& visited)
-{
-	while(!pq.empty())
-	{
-		auto p = pq.top();
-		pq.pop();
-		if(visited[p.second])
-			continue;
-		int min_node = p.second;
-		ll min_dist = -1 * p.first;
-
-		for(auto e : adj[min_node])
-		{
-			if(! visited[e.first])
-			{
-				ll new_dist = min_dist + e.second;
-				if(new_dist < dist[e.first])
-				{
-					pq.push({-new_dist, e.first});
-					dist[e.first] = new_dist;
-				}
-			}
-		}	
-		visited[min_node] = true;
-	}
+void Dijkstra(std::vector<std::vector<int>> &Edges,std::vector<int> &sp,int n, int src){
+    std::set<std::pair<int,int>,std::less<std::pair<int,int>>> rbt;
+    std::vector<std::vector<std::pair<int,int>>> adj(n+1);
+    for (auto& edge: Edges){
+        adj[edge[0]].push_back({edge[1],edge[2]}); // {edge,wight}
+        adj[edge[1]].push_back({edge[0],edge[2]});
+    }
+    sp[src] = 0;
+    std::vector<bool> visited(n+2,false);
+    for (int i = 1; i<n+1;i++){
+        rbt.insert({sp[i],i});
+    }
+    while(!rbt.empty()){
+        int v = (*rbt.begin()).second;
+        rbt.erase(rbt.begin());
+        for (auto& [w,k]: adj[v]){
+            // std::cerr<<"BYE";
+            if (!visited[w]){
+                // std::cerr<<"HI";
+                rbt.erase(rbt.find({sp[w],w}));
+                rbt.insert({k+sp[v],w});
+                sp[w] = std::min(sp[w],k+sp[v]);
+            }
+        }
+        visited[v] = true;
+    }
 }
 
-
 void Testcase::getMinWeight() {
-	// TODO: Complete this function
-
-	// std::cout<<n<<std::endl;
-	std::vector<std::vector<std::pair<int, int>>> adj(n+1, std::vector<std::pair<int,int>>());
-	for(auto e : Edges)
-	{
-		// std::cout<<e[0]<<" "<<e[1]<<"\n";
-		adj[e[0]].push_back({e[1],e[2]});
-		adj[e[1]].push_back({e[0],e[2]});
-	}
-
-
-	// std::vector<std::vector<std::pair<int, int>>> adj_extra;
-	// for(auto e : ExtraEdges)
-	// {
-	// 	adj_extra[e[0]].push_back({e[1],e[2]});
-	// 	adj_extra[e[1]].push_back({e[0],e[2]});
-	// }
-
-
-	std::priority_queue<std::pair<ll,int>> pq;
-	std::vector<ll> dist(n+1, LLONG_MAX);
-	std::vector<bool> visited(n+1, false);
-
-	dist[src] = 0;
-	pq.push({0,src});
-
-	Dijkstra(adj, dist, pq, visited);
-
-	std::vector<ll> new_dist = dist;
-
-	for(auto e : ExtraEdges)
-	{
-		int u = e[0];
-		int v = e[1];
-		int k = e[2];
-		if(dist[u] == dist[v])
-			continue;
-		if(dist[u] > dist[v])
-			std::swap(u,v);
-		//dist[u] < dist[v]
-		if(new_dist[v] <= dist[u] + k)
-			continue;
-		new_dist[v] = dist[u] + k;
-		pq.push({-new_dist[v], v});
-	}
-
-	visited = std::vector<bool>(n, false);
-	// visited[src] = true;
-	Dijkstra(adj, new_dist, pq, visited);
-
-	if(new_dist[dest] == LLONG_MAX)
-		std::cout<<-1<<"\n";
-	else
-		std::cout<<new_dist[dest]<<"\n";
-	
-
+    // TODO: Complete this function
+    if (src==dest) {
+        std::cout<<"0";
+        return;
+    }
+    int min_dist = INT_MAX;
+    std::vector sp(n+1,INT_MAX);
+    Dijkstra(Edges,sp,n,src);
+    if (min_dist == INT_MAX){
+        for (auto& edge: ExtraEdges){
+            std::vector sp(n+1,INT_MAX);
+            Edges.insert(Edges.end(),edge);
+            Dijkstra(Edges,sp,n,src);
+            Edges.pop_back();
+            if (sp[dest]<min_dist) min_dist = sp[dest];
+        }
+        if (min_dist == INT_MAX) std::cout<< "-1";
+        else std::cout<< min_dist;
+    }
+    else std::cout<< min_dist;
 }
